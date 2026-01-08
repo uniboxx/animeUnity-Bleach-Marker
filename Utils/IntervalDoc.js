@@ -41,7 +41,7 @@ class IntervalDoc {
             ["opz", opz, ["object", "undefined"]]
         ]);
 
-        IntervalDoc.mergeOpz(opz, IntervalDoc._opzPreset);
+        opz = IntervalDoc.mergeOpz(opz, IntervalDoc._opzPreset);
 
         var elem = undefined;
 
@@ -70,7 +70,7 @@ class IntervalDoc {
             ["opz", opz, ["object", "undefined"]]
         ]);
 
-        IntervalDoc.mergeOpz(opz, IntervalDoc._opzPreset);
+        opz = IntervalDoc.mergeOpz(opz, IntervalDoc._opzPreset);
 
         var elems = undefined;
 
@@ -100,7 +100,7 @@ class IntervalDoc {
             ["opz", opz, ["object", "undefined"]]
         ]);
 
-        IntervalDoc.mergeOpz(opz, IntervalDoc._opzPreset);
+        opz = IntervalDoc.mergeOpz(opz, IntervalDoc._opzPreset);
 
         var elems = undefined;
 
