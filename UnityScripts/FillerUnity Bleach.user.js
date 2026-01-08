@@ -9,7 +9,7 @@
 // @updateURL    https://github.com/ilNubis/IlNubis-Js-scripts/raw/refs/heads/main/UnityScripts/FillerUnity%20Bleach.user.js
 // @downloadURL  https://github.com/ilNubis/IlNubis-Js-scripts/raw/refs/heads/main/UnityScripts/FillerUnity%20Bleach.user.js
 // @require      https://github.com/ilNubis/IlNubis-Js-scripts/raw/refs/heads/main/Utils/JsIota.js
-// @require      https://github.com/ilNubis/IlNubis-Js-scripts/raw/refs/heads/main/Anime/AssertLib.js
+// @require      https://github.com/ilNubis/IlNubis-Js-scripts/raw/refs/heads/main/Utils/AssertLib.js
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
