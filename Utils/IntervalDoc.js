@@ -1,4 +1,4 @@
-// depend on https://github.com/ilNubis/IlNubis-Js-scripts/raw/refs/heads/main/Utils/AssertLib.js
+// depend on https://raw.githubusercontent.com/ilNubis/IlNubis-Js-scripts/refs/heads/main/Utils/AssertLib.js
 
 
 // -- Dev docs --

@@ -1,15 +1,15 @@
 // ==UserScript==
 // @name         UnityFiller Bleach Marker
-// @namespace    https://github.com/IlNubis
+// @namespace    https://github.com/IlNubis/IlNubis-Js-scripts
 // @version      08-01-2026
 // @description  Mark Bleach mixed and filler episode on Animeunity.so
 // @author       IlNubis
 // @match        https://www.animeunity.so/anime/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=animeunity.so
-// @updateURL    https://github.com/ilNubis/IlNubis-Js-scripts/raw/refs/heads/main/UnityScripts/FillerUnity%20Bleach.user.js
-// @downloadURL  https://github.com/ilNubis/IlNubis-Js-scripts/raw/refs/heads/main/UnityScripts/FillerUnity%20Bleach.user.js
-// @require      https://github.com/ilNubis/IlNubis-Js-scripts/raw/refs/heads/main/Utils/JsIota.js
-// @require      https://github.com/ilNubis/IlNubis-Js-scripts/raw/refs/heads/main/Utils/AssertLib.js
+// @updateURL    https://raw.githubusercontent.com/ilNubis/IlNubis-Js-scripts/refs/heads/main/UnityScripts/FillerUnity%20Bleach.user.js
+// @downloadURL  https://raw.githubusercontent.com/ilNubis/IlNubis-Js-scripts/refs/heads/main/UnityScripts/FillerUnity%20Bleach.user.js
+// @require      https://raw.githubusercontent.com/ilNubis/IlNubis-Js-scripts/refs/heads/main/Utils/JsIota.js
+// @require      https://raw.githubusercontent.com/ilNubis/IlNubis-Js-scripts/refs/heads/main/Utils/AssertLib.js
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
