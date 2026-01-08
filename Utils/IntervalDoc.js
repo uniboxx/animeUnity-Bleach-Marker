@@ -13,7 +13,8 @@ class IntervalDoc {
 
     static mergeOpz(dest, src) {
         AssertLib.assertTypeArgs([
-            ["dest", dest, "object"],
+            "IntervalDoc.mergeOpz()",
+            ["dest", dest, ["object", "undefined"]],
             ["src", src, "object"]
         ]);
 

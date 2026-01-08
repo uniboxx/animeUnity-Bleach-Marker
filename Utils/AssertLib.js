@@ -85,11 +85,11 @@ class AssertLib {
             
             if (boolAcceptedTypesString) {
                 if (argValueType != acceptedTypes) {
-                    throw Error(`${srcName}: expected ${argValueType} to be ${acceptedTypes} but found ${argValueType}`);
+                    throw Error(`${srcName}: expected ${argName} to be ${acceptedTypes} but found ${argValueType}`);
                 }
             } else if (boolAcceptedTypesArray) {
                 if (!acceptedTypes.includes(argValueType)) {
-                    throw Error(`${srcName}: expected ${argValueType} to be in this list [${acceptedTypes.join(", ")}] of types but found ${argValueType}`);
+                    throw Error(`${srcName}: expected ${argName} to be in this list [${acceptedTypes.join(", ")}] of types but found ${argValueType}`);
                 }
             }
             
