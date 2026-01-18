@@ -36,6 +36,7 @@
   // Active Mixed background: #ccc500
 
   const episodeBtnClass = 'episode-item';
+
   const episodeNeutral = 'episode';
   const episodeSeen = 'seen';
   const episodeActive = 'active';
@@ -49,13 +50,15 @@
   const activeFillerClass = 'active-filler';
 
   const neutralById = [episodeNeutral, neutralMixedClass, neutralFillerClass];
-  AssertLib.assert(neutralById.length == 3, '[neutralById]: Unexpected length');
-
   const seenById = [episodeSeen, seenMixedClass, seenFillerClass];
-  AssertLib.assert(seenById.length == 3, '[seenById]: Unexpected length');
-
   const activeById = [episodeActive, activeMixedClass, activeFillerClass];
-  AssertLib.assert(activeById.length == 3, '[activeById]: Unexpected length');
+
+  // check length of identifiers arrays
+  Object.entries({ neutralById, seenById, activeById }).forEach(
+    ([key, value]) => {
+      AssertLib.assert(value.length === 3, `[${key}]: Unexpected length`);
+    },
+  );
 
   const injectStyle = `
 .box-16x9 {
