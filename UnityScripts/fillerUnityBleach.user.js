@@ -154,58 +154,36 @@
 
   // check if episode is neutral
   function isNeutral(episode_classes) {
-    // if (episode_classes.contains(neutralClasses[canonId])) {
-    //   return canonId;
-    // }
-
-    // if (episode_classes.contains(neutralClasses[mixedId])) {
-    //   return mixedId;
-    // }
-
-    // if (episode_classes.contains(neutralClasses[fillerId])) {
-    //   return fillerId;
-    // }
-    let result;
-    neutralClasses.forEach((_, idx) => {
-      if (episode_classes.contains(neutralClasses[idx])) {
+    let result = null;
+    neutralClasses.forEach((value, idx) => {
+      if (episode_classes.contains(value)) {
         result = idx;
-      } else {
-        result = null;
       }
     });
+
     return result;
   }
 
-  function is_seen(episode_classes) {
-    if (episode_classes.contains(seenClasses[canonId])) {
-      return canonId;
-    }
+  function isSeen(episode_classes) {
+    let result = null;
+    seenClasses.forEach((value, idx) => {
+      if (episode_classes.contains(value)) {
+        result = idx;
+      }
+    });
 
-    if (episode_classes.contains(seenClasses[mixedId])) {
-      return mixedId;
-    }
-
-    if (episode_classes.contains(seenClasses[fillerId])) {
-      return fillerId;
-    }
-
-    return null;
+    return result;
   }
 
-  function is_active(episode_classes) {
-    if (episode_classes.contains(activeClasses[canonId])) {
-      return canonId;
-    }
+  function isActive(episode_classes) {
+    let result = null;
+    activeClasses.forEach((value, idx) => {
+      if (episode_classes.contains(value)) {
+        result = idx;
+      }
+    });
 
-    if (episode_classes.contains(activeClasses[mixedId])) {
-      return mixedId;
-    }
-
-    if (episode_classes.contains(activeClasses[fillerId])) {
-      return fillerId;
-    }
-
-    return null;
+    return result;
   }
 
   function neutral_to_id(episode_classes, prev_id, befo_id) {
@@ -273,12 +251,12 @@
       neutral_to_id(episode_classes, neutral_identifier, episode_id);
     }
 
-    const seen_id = is_seen(episode_classes);
+    const seen_id = isSeen(episode_classes);
     if (null != seen_id) {
       seen_to_id(episode_classes, seen_id, episode_id);
     }
 
-    const active_id = is_active(episode_classes);
+    const active_id = isActive(episode_classes);
     if (null != active_id) {
       active_to_id(episode_classes, active_id, episode_id);
     }
@@ -331,21 +309,21 @@
         convert_to_id(episode, episode_id);
 
         if (episode.classList.contains(activeClasses[episode_id])) {
-          const top_bar_class = document.getElementById(videoTopBarId);
+          let top_bar_class = document.getElementById(videoTopBarId);
           AssertLib.assert(
             top_bar_class != null,
             'getElementById(videoTopBarId): element not found.',
           );
           top_bar_class = top_bar_class.classList;
 
-          const bottom_bar_class = document.getElementById(videoBottomBarId);
+          let bottom_bar_class = document.getElementById(videoBottomBarId);
           AssertLib.assert(
             bottom_bar_class != null,
             'getElementById(videoBottomBarId): element not found.',
           );
           bottom_bar_class = bottom_bar_class.classList;
 
-          const neutral_identifier = isNeutral(top_bar_class);
+          let neutral_identifier = isNeutral(top_bar_class);
           if (neutral_identifier == null) {
             top_bar_class.add(neutralClasses[episode_id]);
           } else {
@@ -364,21 +342,21 @@
       episode.childNodes[0].style.background = 'none';
       convert_to_id(episode, episode_id);
       if (episode.classList.contains(activeClasses[episode_id])) {
-        const top_bar_class = document.getElementById(videoTopBarId);
+        let top_bar_class = document.getElementById(videoTopBarId);
         AssertLib.assert(
           top_bar_class != null,
           'getElementById(videoTopBarId): element not found.',
         );
         top_bar_class = top_bar_class.classList;
 
-        const bottom_bar_class = document.getElementById(videoBottomBarId);
+        let bottom_bar_class = document.getElementById(videoBottomBarId);
         AssertLib.assert(
           bottom_bar_class != null,
           'getElementById(videoBottomBarId): element not found.',
         );
         bottom_bar_class = bottom_bar_class.classList;
 
-        const neutral_identifier = isNeutral(top_bar_class);
+        let neutral_identifier = isNeutral(top_bar_class);
         if (neutral_identifier == null) {
           top_bar_class.add(neutralClasses[episode_id]);
         } else {
@@ -396,7 +374,7 @@
   }
 
   const paths = includePath.keys();
-  const path = null;
+  let path = null;
 
   while (true) {
     path = paths.next();
