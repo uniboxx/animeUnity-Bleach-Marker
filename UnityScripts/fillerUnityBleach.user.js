@@ -83,8 +83,6 @@
     --darkreader-inline-bgcolor: #cc0018
 }
 
-
-
 .${neutralMixedClass} {
     background: ${newNeutralMixedBg} !important;
     --darkreader-inline-bgcolor: ${newNeutralMixedBg};
@@ -247,19 +245,19 @@
   }
 
   function convert_to_id(episode, episode_id) {
-    var episode_class = episode.classList;
+    const episode_class = episode.classList;
     // neutral
-    var neutral_id = is_neutral(episode_class);
+    const neutral_id = is_neutral(episode_class);
     if (null != neutral_id) {
       neutral_to_id(episode_class, neutral_id, episode_id);
     }
 
-    var seen_id = is_seen(episode_class);
+    const seen_id = is_seen(episode_class);
     if (null != seen_id) {
       seen_to_id(episode_class, seen_id, episode_id);
     }
 
-    var active_id = is_active(episode_class);
+    const active_id = is_active(episode_class);
     if (null != active_id) {
       active_to_id(episode_class, active_id, episode_id);
     }
@@ -279,7 +277,7 @@
     }
 
     for (let i = 0; i < episodes.length; i++) {
-      var episode = episodes[i];
+      const episode = episodes[i];
       if (!episode.classList.contains(episodeBtnClass)) {
         throw Error(
           '(proc_episode[for episodes]): Unexpected obj. episode',
@@ -287,7 +285,7 @@
         );
       }
 
-      var episode_id = episode_data.get(parseInt(episode.textContent));
+      const episode_id = episode_data.get(parseInt(episode.textContent));
 
       if (undefined == episode_id) {
         console.log(parseInt(episode.textContent));
@@ -295,7 +293,7 @@
       }
 
       onTextChange(episode, (episode) => {
-        var episode_id = episode_data.get(parseInt(episode.textContent));
+        const episode_id = episode_data.get(parseInt(episode.textContent));
         if (undefined == episode_id) {
           console.log(parseInt(episode.textContent));
           return;
@@ -304,7 +302,7 @@
       });
 
       onAttrChange(episode, (episode) => {
-        var episode_id = episode_data.get(parseInt(episode.textContent));
+        const episode_id = episode_data.get(parseInt(episode.textContent));
         if (undefined == episode_id) {
           console.log(parseInt(episode.textContent));
           return;
@@ -312,21 +310,21 @@
         convert_to_id(episode, episode_id);
 
         if (episode.classList.contains(activeById[episode_id])) {
-          var top_bar_class = document.getElementById(videoTopBarId);
+          const top_bar_class = document.getElementById(videoTopBarId);
           AssertLib.assert(
             top_bar_class != null,
             'getElementById(videoTopBarId): element not found.',
           );
           top_bar_class = top_bar_class.classList;
 
-          var bottom_bar_class = document.getElementById(videoBottomBarId);
+          const bottom_bar_class = document.getElementById(videoBottomBarId);
           AssertLib.assert(
             bottom_bar_class != null,
             'getElementById(videoBottomBarId): element not found.',
           );
           bottom_bar_class = bottom_bar_class.classList;
 
-          var neutral_id = is_neutral(top_bar_class);
+          const neutral_id = is_neutral(top_bar_class);
           if (neutral_id == null) {
             top_bar_class.add(neutralById[episode_id]);
           } else {
@@ -345,21 +343,21 @@
       episode.childNodes[0].style.background = 'none';
       convert_to_id(episode, episode_id);
       if (episode.classList.contains(activeById[episode_id])) {
-        var top_bar_class = document.getElementById(videoTopBarId);
+        const top_bar_class = document.getElementById(videoTopBarId);
         AssertLib.assert(
           top_bar_class != null,
           'getElementById(videoTopBarId): element not found.',
         );
         top_bar_class = top_bar_class.classList;
 
-        var bottom_bar_class = document.getElementById(videoBottomBarId);
+        const bottom_bar_class = document.getElementById(videoBottomBarId);
         AssertLib.assert(
           bottom_bar_class != null,
           'getElementById(videoBottomBarId): element not found.',
         );
         bottom_bar_class = bottom_bar_class.classList;
 
-        var neutral_id = is_neutral(top_bar_class);
+        const neutral_id = is_neutral(top_bar_class);
         if (neutral_id == null) {
           top_bar_class.add(neutralById[episode_id]);
         } else {
@@ -376,8 +374,8 @@
     }
   }
 
-  var paths = includePath.keys();
-  var path = null;
+  const paths = includePath.keys();
+  const path = null;
 
   while (true) {
     path = paths.next();
@@ -395,8 +393,8 @@
 
   if (path != null) {
     const timer = setInterval(() => {
-      var episode_btn = document.getElementsByClassName(episodeBtnClass);
-      var episode_data = includePath.get(path.value);
+      const episode_btn = document.getElementsByClassName(episodeBtnClass);
+      const episode_data = includePath.get(path.value);
 
       if (episode_btn.length > 0) {
         clearInterval(timer);
