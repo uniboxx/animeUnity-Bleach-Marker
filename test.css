@@ -1,0 +1,18 @@
+.baseMixed {
+  background-color: lch(40 97 102);
+}
+.activeMixed {
+  background-color: lch(60 97 102);
+}
+.seenMixed {
+  background-color: lch(80 97 102);
+}
+.baseFiller {
+  background-color: lch(20 97 45);
+}
+.activeFiller {
+  background-color: lch(40 97 45);
+}
+.seenFiller {
+  background-color: lch(60 97 45);
+}
