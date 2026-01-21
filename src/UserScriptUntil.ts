@@ -80,6 +80,15 @@ class UserScriptUtils {
       setTimeout(resolve, ms);
     });
   }
+
+  addClass(
+    element: HTMLElement,
+    classToAdd: string,
+    classesToClean: string[] = ['canon', 'mixed', 'filler'],
+  ) {
+    element.classList.remove(...classesToClean);
+    element.classList.add(classToAdd);
+  }
 }
 
-export const userScriptUtils = new UserScriptUtils();
+export const utils = new UserScriptUtils();
