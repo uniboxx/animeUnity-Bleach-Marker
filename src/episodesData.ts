@@ -33,13 +33,16 @@ const fillerEpisodes = [
 
 const [canonIdx, mixedIdx, fillerIdx] = [0, 1, 2];
 
+const totalEpisodesLength =
+  canonEpisodes.length + mixedEpisodes.length + fillerEpisodes.length;
+
 const bleachEpisodeData = new Map();
-canonEpisodes.forEach((ep) => {
-  bleachEpisodeData.set(ep, canonIdx);
-});
-mixedEpisodes.forEach((ep) => {
-  bleachEpisodeData.set(ep, mixedIdx);
-});
-fillerEpisodes.forEach((ep) => {
-  bleachEpisodeData.set(ep, fillerIdx);
-});
+for (let i = 1; i <= totalEpisodesLength; i++) {
+  if (canonEpisodes.includes(i)) {
+    bleachEpisodeData.set(i, canonIdx);
+  } else if (mixedEpisodes.includes(i)) {
+    bleachEpisodeData.set(i, mixedIdx);
+  } else if (fillerEpisodes.includes(i)) {
+    bleachEpisodeData.set(i, fillerIdx);
+  }
+}

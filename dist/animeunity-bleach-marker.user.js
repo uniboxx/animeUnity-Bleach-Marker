@@ -12,7 +12,7 @@
 // @grant        GM_addStyle
 // ==/UserScript==
 
-(function () {
+(async function () {
   'use strict';
 
   const d=new Set;const importCSS = async e=>{d.has(e)||(d.add(e),(t=>{typeof GM_addStyle=="function"?GM_addStyle(t):(document.head||document.documentElement).appendChild(document.createElement("style")).append(t);})(e));};
@@ -392,18 +392,73 @@
     355
   ];
   const [canonIdx, mixedIdx, fillerIdx] = [0, 1, 2];
+  const totalEpisodesLength = canonEpisodes.length + mixedEpisodes.length + fillerEpisodes.length;
   const bleachEpisodeData = new Map();
-  canonEpisodes.forEach((ep) => {
-    bleachEpisodeData.set(ep, canonIdx);
-  });
-  mixedEpisodes.forEach((ep) => {
-    bleachEpisodeData.set(ep, mixedIdx);
-  });
-  fillerEpisodes.forEach((ep) => {
-    bleachEpisodeData.set(ep, fillerIdx);
-  });
+  for (let i = 1; i <= totalEpisodesLength; i++) {
+    if (canonEpisodes.includes(i)) {
+      bleachEpisodeData.set(i, canonIdx);
+    } else if (mixedEpisodes.includes(i)) {
+      bleachEpisodeData.set(i, mixedIdx);
+    } else if (fillerEpisodes.includes(i)) {
+      bleachEpisodeData.set(i, fillerIdx);
+    }
+  }
+  class UserScriptUtils {
+    constructor() {
+    }
+    async waitUntil(testCondition, timeoutMs = 3e4, checkIntervalMs = 1e3) {
+      const start_ts = ( new Date()).getTime();
+      let elapsed_time = 0;
+      while (!testCondition()) {
+        elapsed_time = +(( new Date()).getTime() - start_ts);
+        if (!!timeoutMs && !isNaN(timeoutMs) && timeoutMs > 0 && elapsed_time >= timeoutMs) {
+          throw new Error(
+            `Timeout of ${timeoutMs} ms exceeded (${elapsed_time} ms elapsed)`
+          );
+        }
+        await this.sleep(checkIntervalMs);
+      }
+      return {
+        msg: `The specified condition was met before the ${timeoutMs} ms timeout`,
+        time: elapsed_time,
+        given_timeout: timeoutMs
+      };
+    }
+    async waitForElementPresent(cssSelector, timeoutMs = 3e4) {
+      if (!cssSelector.trim()) throw new Error("Please specify a css selector");
+      return new Promise((resolve, reject) => {
+        this.waitUntil(() => !!document.querySelector(cssSelector), timeoutMs).then(
+          (result) => resolve({
+            msg: `Element with selector ${cssSelector} is present`,
+            time: result.time
+          })
+        ).catch((result) => reject(new Error(result)));
+      });
+    }
+    async waitForElementNotPresent(cssSelector, timeoutMs = 3e4) {
+      if (!cssSelector.trim()) throw new Error("Please specify a css selector");
+      return new Promise((resolve, reject) => {
+        this.waitUntil(() => !document.querySelector(cssSelector), timeoutMs).then(
+          (result) => resolve({
+            msg: `Element with selector ${cssSelector} is not present`,
+            time: result.time
+          })
+        ).catch((result) => reject(new Error(result)));
+      });
+    }
+    sleep(ms = 0) {
+      return new Promise((resolve, reject) => {
+        if (!ms || isNaN(ms) || ms < 0) {
+          reject(new Error("Timeout must be a positive number"));
+        }
+        setTimeout(resolve, ms);
+      });
+    }
+  }
+  const userScriptUtils = new UserScriptUtils();
   console.log("Bleach Marker");
-  const episodeBtns = document.querySelectorAll(".episode-item");
-  console.log("🚀 ~ :8 ~ episodeBtns:", episodeBtns);
+  await( userScriptUtils.waitForElementPresent("#video-top"));
+  const videoTopBarEl = document.getElementById("video-top");
+  console.log("🚀 ~ :9 ~ videoTopBarEl:", videoTopBarEl);
 
 })();
