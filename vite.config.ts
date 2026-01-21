@@ -16,6 +16,8 @@ export default defineConfig({
         license: 'MIT',
         homepage: 'https://github.com/uniboxx/animeUnity-Bleach-Marker',
         match: ['https://www.animeunity.so/anime/*'],
+        downloadURL:
+          'https://github.com/uniboxx/animeUnity-Bleach-Marker/raw/main/dist/animeunity-bleach-marker.user.js',
       },
       server: { mountGmApi: true },
       build: {
