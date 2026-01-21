@@ -1,5 +1,7 @@
 {
   "name": "animeunity-bleach-marker",
+  "description": "mark episodes as mixed or filler on animeunity.so",
+  "author": "uniboxx",
   "private": true,
   "version": "0.0.0",
   "type": "module",

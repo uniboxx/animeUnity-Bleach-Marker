@@ -12,11 +12,19 @@ export default defineConfig({
         description: 'Mark mixed and filler episodes',
         version: '1.0.0',
         icon: 'https://www.google.com/s2/favicons?sz=64&domain=animeunity.so',
-        match: ['https://www.google.com/'],
         author: 'uniboxx',
         license: 'MIT',
         homepage: 'https://github.com/uniboxx/animeUnity-Bleach-Marker',
+        match: ['https://www.animeunity.so/anime/*'],
+      },
+      server: { mountGmApi: true },
+      build: {
+        metaFileName: false,
       },
     }),
   ],
+  build: {
+    outDir: 'dist',
+    minify: false,
+  },
 });
