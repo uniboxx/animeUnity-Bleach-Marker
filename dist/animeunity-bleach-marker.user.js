@@ -12,7 +12,7 @@
 // @grant        GM_addStyle
 // ==/UserScript==
 
-(function () {
+(async function () {
   'use strict';
 
   const d=new Set;const importCSS = async e=>{d.has(e)||(d.add(e),(t=>{typeof GM_addStyle=="function"?GM_addStyle(t):(document.head||document.documentElement).appendChild(document.createElement("style")).append(t);})(e));};
@@ -493,5 +493,16 @@
   }
   updateVideoTopBarTypeClass();
   updateEpisodesTypeClass();
+  await( utils.waitForElementPresent("#video-top span"));
+  const targetNode = document.querySelector("#video-top span");
+  const observer = new MutationObserver((mutationsList) => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === "characterData") {
+        updateVideoTopBarTypeClass();
+        updateEpisodesTypeClass();
+      }
+    }
+  });
+  observer.observe(targetNode, { characterData: true, subtree: true });
 
 })();

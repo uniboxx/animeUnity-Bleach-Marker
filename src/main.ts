@@ -28,3 +28,16 @@ async function updateEpisodesTypeClass() {
 }
 updateVideoTopBarTypeClass();
 updateEpisodesTypeClass();
+
+await utils.waitForElementPresent('#video-top span');
+const targetNode = document.querySelector('#video-top span');
+
+const observer = new MutationObserver((mutationsList) => {
+  for (const mutation of mutationsList) {
+    if (mutation.type === 'characterData') {
+      updateVideoTopBarTypeClass();
+      updateEpisodesTypeClass();
+    }
+  }
+});
+observer.observe(targetNode as Node, { characterData: true, subtree: true });
