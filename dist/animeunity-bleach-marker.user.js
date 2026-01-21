@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Bleach Marker
+// @name         animeUnity Bleach Marker
 // @namespace    https://github.com/uniboxx/animeUnity-Bleach-Marker
 // @version      1.0.0
 // @author       uniboxx
@@ -17,7 +17,7 @@
 
   const d=new Set;const importCSS = async e=>{d.has(e)||(d.add(e),(t=>{typeof GM_addStyle=="function"?GM_addStyle(t):(document.head||document.documentElement).appendChild(document.createElement("style")).append(t);})(e));};
 
-  const styleCss = "#video-top{background:#fff!important}";
+  const styleCss = ".box-16x9{overflow:visible!important}#video-bottom a{background:none!important}.mixed{background:#404a00!important;background:lch(30 97 102)!important;--darkreader-inline-bgcolor: lch(30 97 102)}.seen.mixed{background:#c2cf00!important;background:lch(80 97 102)!important;--darkreader-inline-bgcolor: lch(80 97 102)}.seen.active.mixed{background:#889800!important;background:lch(60 97 102)!important;--darkreader-inline-bgcolor: lch(60 97 102)}.filler{background:#463100!important;background:lch(20 97 45)!important;--darkreader-inline-bgcolor: lch(20 97 45)}.seen.filler{background:#ff8c6b!important;background:lch(70 97 45)!important;--darkreader-inline-bgcolor: lch(70 97 45)}.seen.active.filler{background:#df2e00!important;background:lch(50 97 45)!important;--darkreader-inline-bgcolor: lch(50 97 45)}";
   importCSS(styleCss);
   const canonEpisodes = [
     1,
@@ -403,5 +403,7 @@
     bleachEpisodeData.set(ep, fillerIdx);
   });
   console.log("Bleach Marker");
+  const episodeBtns = document.querySelectorAll(".episode-item");
+  console.log("🚀 ~ :8 ~ episodeBtns:", episodeBtns);
 
 })();

@@ -7,7 +7,7 @@ export default defineConfig({
     monkey({
       entry: 'src/main.ts',
       userscript: {
-        name: 'Bleach Marker',
+        name: 'animeUnity Bleach Marker',
         namespace: 'https://github.com/uniboxx/animeUnity-Bleach-Marker',
         description: 'Mark mixed and filler episodes',
         version: '1.0.0',
