@@ -55,7 +55,7 @@ class UserScriptUtils {
     }
   }
 
-  async waitForElementNotPresent(cssSelector: string, timeoutMs = 30000) {
+  async waitForElementNotPresent(cssSelector: string, timeoutMs = 30_000) {
     if (!cssSelector.trim()) throw new Error('Please specify a css selector');
 
     try {
