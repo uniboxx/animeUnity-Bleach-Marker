@@ -31,6 +31,7 @@ const fillerEpisodes = [
   338, 339, 340, 341, 355,
 ];
 
+const types = ['canon', 'mixed', 'filler'];
 const [canonIdx, mixedIdx, fillerIdx] = [0, 1, 2];
 
 const totalEpisodesLength =
@@ -46,3 +47,4 @@ for (let i = 1; i <= totalEpisodesLength; i++) {
     bleachEpisodeData.set(i, fillerIdx);
   }
 }
+export { types, bleachEpisodeData };

@@ -391,6 +391,7 @@
     341,
     355
   ];
+  const types = ["canon", "mixed", "filler"];
   const [canonIdx, mixedIdx, fillerIdx] = [0, 1, 2];
   const totalEpisodesLength = canonEpisodes.length + mixedEpisodes.length + fillerEpisodes.length;
   const bleachEpisodeData = new Map();
@@ -427,13 +428,13 @@
     async waitForElementPresent(cssSelector, timeoutMs = 3e4) {
       if (!cssSelector.trim()) throw new Error("Please specify a css selector");
       try {
-        const result2 = await this.waitUntil(
+        const result = await this.waitUntil(
           () => !!document.querySelector(cssSelector),
           timeoutMs
         );
         return {
           msg: `Element with selector ${cssSelector} is present`,
-          time: result2.time
+          time: result.time
         };
       } catch (error) {
         if (error instanceof Error) throw new Error(error.message);
@@ -442,13 +443,13 @@
     async waitForElementNotPresent(cssSelector, timeoutMs = 3e4) {
       if (!cssSelector.trim()) throw new Error("Please specify a css selector");
       try {
-        const result2 = await this.waitUntil(
+        const result = await this.waitUntil(
           () => !document.querySelector(cssSelector),
           timeoutMs
         );
         return {
           msg: `Element with selector ${cssSelector} is not present`,
-          time: result2.time
+          time: result.time
         };
       } catch (error) {
         if (error instanceof Error) throw new Error(error.message);
@@ -462,12 +463,41 @@
         setTimeout(resolve, ms);
       });
     }
+    addClass(element, classToAdd, classesToClean = ["canon", "mixed", "filler"]) {
+      element.classList.remove(...classesToClean);
+      element.classList.add(classToAdd);
+    }
   }
-  const userScriptUtils = new UserScriptUtils();
+  const utils = new UserScriptUtils();
   console.log("Bleach Marker");
-  const result = await( userScriptUtils.waitForElementPresent("#video-top"));
-  console.log("🚀 ~ :10 ~ result:", result);
-  const videoTopBarEl = document.getElementById("video-top");
-  console.log("🚀 ~ :9 ~ videoTopBarEl:", videoTopBarEl);
+  async function updateVideoTopBarTypeClass() {
+    await utils.waitForElementPresent("#video-top");
+    const videoTopBarEl = document.getElementById("video-top");
+    const title = videoTopBarEl?.querySelector(".title");
+    const activeEpisodeNumber = +(title?.textContent?.match(/\d+/)?.[0] ?? -1);
+    console.log(
+      "🚀 ~ :14 ~ updateVideoTopBarTypeClass ~ activeEpisodeNumber:",
+      activeEpisodeNumber
+    );
+    const activeEpisodeIdx = bleachEpisodeData.get(activeEpisodeNumber);
+    const classToAdd = types[activeEpisodeIdx];
+    videoTopBarEl && utils.addClass(videoTopBarEl, classToAdd);
+  }
+  updateVideoTopBarTypeClass();
+  await( utils.waitForElementPresent(".episode-item"));
+  const episodeBtns = document.querySelectorAll(
+    ".episode-item"
+  );
+  console.log("🚀 ~ :17 ~ episodeBtns:", episodeBtns);
+  function updateEpisodesTypeClass() {
+    episodeBtns.forEach((btn) => {
+      const episodeNumber = +btn.textContent;
+      if (!episodeNumber) return;
+      const typeIdx = bleachEpisodeData.get(episodeNumber);
+      const classToAdd = types[typeIdx];
+      utils.addClass(btn, classToAdd);
+    });
+  }
+  updateEpisodesTypeClass();
 
 })();
