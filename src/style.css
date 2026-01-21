@@ -1,3 +1,36 @@
-#video-top {
-  background: #fff !important;
+.box-16x9 {
+  overflow: visible !important;
+}
+#video-bottom a {
+  background: none !important;
+}
+
+.mixed {
+  background: lch(30 97 102) !important;
+  --darkreader-inline-bgcolor: lch(30 97 102);
+}
+
+.seen.mixed {
+  background: lch(80 97 102) !important;
+  --darkreader-inline-bgcolor: lch(80 97 102);
+}
+
+.seen.active.mixed {
+  background: lch(60 97 102) !important;
+  --darkreader-inline-bgcolor: lch(60 97 102);
+}
+
+.filler {
+  background: lch(20 97 45) !important;
+  --darkreader-inline-bgcolor: lch(20 97 45);
+}
+
+.seen.filler {
+  background: lch(70 97 45) !important;
+  --darkreader-inline-bgcolor: lch(70 97 45);
+}
+
+.seen.active.filler {
+  background: lch(50 97 45) !important;
+  --darkreader-inline-bgcolor: lch(50 97 45);
 }
