@@ -8,23 +8,16 @@ async function updateVideoTopBarTypeClass() {
   const videoTopBarEl = document.getElementById('video-top');
   const title = videoTopBarEl?.querySelector('.title');
   const activeEpisodeNumber = +(title?.textContent?.match(/\d+/)?.[0] ?? -1);
-  console.log(
-    '🚀 ~ :14 ~ updateVideoTopBarTypeClass ~ activeEpisodeNumber:',
-    activeEpisodeNumber,
-  );
   const activeEpisodeIdx = bleachEpisodeData.get(activeEpisodeNumber);
   const classToAdd = types[activeEpisodeIdx];
   videoTopBarEl && utils.addClass(videoTopBarEl, classToAdd);
 }
-updateVideoTopBarTypeClass();
 
-await utils.waitForElementPresent('.episode-item');
-const episodeBtns = document.querySelectorAll(
-  '.episode-item',
-) as NodeListOf<HTMLDivElement>;
-console.log('🚀 ~ :17 ~ episodeBtns:', episodeBtns);
-
-function updateEpisodesTypeClass() {
+async function updateEpisodesTypeClass() {
+  await utils.waitForElementPresent('.episode-item');
+  const episodeBtns = document.querySelectorAll(
+    '.episode-item',
+  ) as NodeListOf<HTMLDivElement>;
   episodeBtns.forEach((btn) => {
     const episodeNumber = +btn.textContent;
     if (!episodeNumber) return;
@@ -33,4 +26,5 @@ function updateEpisodesTypeClass() {
     utils.addClass(btn, classToAdd);
   });
 }
+updateVideoTopBarTypeClass();
 updateEpisodesTypeClass();

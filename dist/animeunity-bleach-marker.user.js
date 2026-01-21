@@ -12,7 +12,7 @@
 // @grant        GM_addStyle
 // ==/UserScript==
 
-(async function () {
+(function () {
   'use strict';
 
   const d=new Set;const importCSS = async e=>{d.has(e)||(d.add(e),(t=>{typeof GM_addStyle=="function"?GM_addStyle(t):(document.head||document.documentElement).appendChild(document.createElement("style")).append(t);})(e));};
@@ -474,21 +474,15 @@
     const videoTopBarEl = document.getElementById("video-top");
     const title = videoTopBarEl?.querySelector(".title");
     const activeEpisodeNumber = +(title?.textContent?.match(/\d+/)?.[0] ?? -1);
-    console.log(
-      "🚀 ~ :14 ~ updateVideoTopBarTypeClass ~ activeEpisodeNumber:",
-      activeEpisodeNumber
-    );
     const activeEpisodeIdx = bleachEpisodeData.get(activeEpisodeNumber);
     const classToAdd = types[activeEpisodeIdx];
     videoTopBarEl && utils.addClass(videoTopBarEl, classToAdd);
   }
-  updateVideoTopBarTypeClass();
-  await( utils.waitForElementPresent(".episode-item"));
-  const episodeBtns = document.querySelectorAll(
-    ".episode-item"
-  );
-  console.log("🚀 ~ :17 ~ episodeBtns:", episodeBtns);
-  function updateEpisodesTypeClass() {
+  async function updateEpisodesTypeClass() {
+    await utils.waitForElementPresent(".episode-item");
+    const episodeBtns = document.querySelectorAll(
+      ".episode-item"
+    );
     episodeBtns.forEach((btn) => {
       const episodeNumber = +btn.textContent;
       if (!episodeNumber) return;
@@ -497,6 +491,7 @@
       utils.addClass(btn, classToAdd);
     });
   }
+  updateVideoTopBarTypeClass();
   updateEpisodesTypeClass();
 
 })();
