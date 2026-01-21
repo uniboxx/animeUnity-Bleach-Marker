@@ -29,16 +29,18 @@ async function updateEpisodesTypeClass() {
 updateVideoTopBarTypeClass();
 updateEpisodesTypeClass();
 
-await utils.waitForElementPresent('#video-top');
-
 const observer = new MutationObserver(() => {
   updateVideoTopBarTypeClass();
   updateEpisodesTypeClass();
 });
+
+await utils.waitForElementPresent('#video-top');
 observer.observe(document.querySelector('#video-top') as Node, {
   characterData: true,
   subtree: true,
 });
+
+await utils.waitForElementPresent('#episode-nav');
 observer.observe(document.querySelector('#episode-nav') as Node, {
   attributes: true,
   subtree: true,
