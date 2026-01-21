@@ -2,10 +2,7 @@ import './style.css';
 import { types, bleachEpisodeData } from './episodesData';
 import { utils } from './UserScriptUntil';
 
-// main.ts
-
-console.log('Bleach Marker');
-
+// ================== MAIN CODE ==================
 async function updateVideoTopBarTypeClass() {
   await utils.waitForElementPresent('#video-top');
   const videoTopBarEl = document.getElementById('video-top');

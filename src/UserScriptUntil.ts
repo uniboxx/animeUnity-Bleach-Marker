@@ -1,3 +1,5 @@
+// ============== UTILITIES ==================
+
 class UserScriptUtils {
   constructor() {}
 
@@ -92,3 +94,5 @@ class UserScriptUtils {
 }
 
 export const utils = new UserScriptUtils();
+
+// ==============================================
