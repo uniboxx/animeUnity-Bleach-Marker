@@ -469,7 +469,6 @@
     }
   }
   const utils = new UserScriptUtils();
-  console.log("Bleach Marker");
   async function updateVideoTopBarTypeClass() {
     await utils.waitForElementPresent("#video-top");
     const videoTopBarEl = document.getElementById("video-top");
