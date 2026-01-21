@@ -41,31 +41,35 @@ class UserScriptUtils {
 			
 			Ritorno il valore di un'altra Promise per poter customizzare meglio le risposte
 		*/
-    return new Promise((resolve, reject) => {
-      this.waitUntil(() => !!document.querySelector(cssSelector), timeoutMs)
-        .then((result) =>
-          resolve({
-            msg: `Element with selector ${cssSelector} is present`,
-            time: result.time,
-          }),
-        )
-        .catch((result) => reject(new Error(result)));
-    });
+    try {
+      const result = await this.waitUntil(
+        () => !!document.querySelector(cssSelector),
+        timeoutMs,
+      );
+      return {
+        msg: `Element with selector ${cssSelector} is present`,
+        time: result.time,
+      };
+    } catch (error) {
+      if (error instanceof Error) throw new Error(error.message);
+    }
   }
 
   async waitForElementNotPresent(cssSelector: string, timeoutMs = 30000) {
     if (!cssSelector.trim()) throw new Error('Please specify a css selector');
 
-    return new Promise((resolve, reject) => {
-      this.waitUntil(() => !document.querySelector(cssSelector), timeoutMs)
-        .then((result) =>
-          resolve({
-            msg: `Element with selector ${cssSelector} is not present`,
-            time: result.time,
-          }),
-        )
-        .catch((result) => reject(new Error(result)));
-    });
+    try {
+      const result = await this.waitUntil(
+        () => !document.querySelector(cssSelector),
+        timeoutMs,
+      );
+      return {
+        msg: `Element with selector ${cssSelector} is not present`,
+        time: result.time,
+      };
+    } catch (error) {
+      if (error instanceof Error) throw new Error(error.message);
+    }
   }
 
   sleep(ms = 0) {

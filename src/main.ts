@@ -6,6 +6,7 @@ import { userScriptUtils } from './waitUntil';
 
 console.log('Bleach Marker');
 
-await userScriptUtils.waitForElementPresent('#video-top');
+const result = await userScriptUtils.waitForElementPresent('#video-top');
+console.log('🚀 ~ :10 ~ result:', result);
 const videoTopBarEl = document.getElementById('video-top');
 console.log('🚀 ~ :9 ~ videoTopBarEl:', videoTopBarEl);

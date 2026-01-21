@@ -426,25 +426,33 @@
     }
     async waitForElementPresent(cssSelector, timeoutMs = 3e4) {
       if (!cssSelector.trim()) throw new Error("Please specify a css selector");
-      return new Promise((resolve, reject) => {
-        this.waitUntil(() => !!document.querySelector(cssSelector), timeoutMs).then(
-          (result) => resolve({
-            msg: `Element with selector ${cssSelector} is present`,
-            time: result.time
-          })
-        ).catch((result) => reject(new Error(result)));
-      });
+      try {
+        const result2 = await this.waitUntil(
+          () => !!document.querySelector(cssSelector),
+          timeoutMs
+        );
+        return {
+          msg: `Element with selector ${cssSelector} is present`,
+          time: result2.time
+        };
+      } catch (error) {
+        if (error instanceof Error) throw new Error(error.message);
+      }
     }
     async waitForElementNotPresent(cssSelector, timeoutMs = 3e4) {
       if (!cssSelector.trim()) throw new Error("Please specify a css selector");
-      return new Promise((resolve, reject) => {
-        this.waitUntil(() => !document.querySelector(cssSelector), timeoutMs).then(
-          (result) => resolve({
-            msg: `Element with selector ${cssSelector} is not present`,
-            time: result.time
-          })
-        ).catch((result) => reject(new Error(result)));
-      });
+      try {
+        const result2 = await this.waitUntil(
+          () => !document.querySelector(cssSelector),
+          timeoutMs
+        );
+        return {
+          msg: `Element with selector ${cssSelector} is not present`,
+          time: result2.time
+        };
+      } catch (error) {
+        if (error instanceof Error) throw new Error(error.message);
+      }
     }
     sleep(ms = 0) {
       return new Promise((resolve, reject) => {
@@ -457,7 +465,8 @@
   }
   const userScriptUtils = new UserScriptUtils();
   console.log("Bleach Marker");
-  await( userScriptUtils.waitForElementPresent("#video-top"));
+  const result = await( userScriptUtils.waitForElementPresent("#video-top"));
+  console.log("🚀 ~ :10 ~ result:", result);
   const videoTopBarEl = document.getElementById("video-top");
   console.log("🚀 ~ :9 ~ videoTopBarEl:", videoTopBarEl);
 
