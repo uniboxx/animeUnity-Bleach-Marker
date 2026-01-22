@@ -15,10 +15,19 @@ async function updateVideoTopBarClass() {
   const activeEpisodeIdx = bleachEpisodeData.get(activeEpisodeNumber);
   const episodeTypeClass = types[activeEpisodeIdx]; // "canon", "mixed" or "filler"
   utils.addClass(videoTopBarElement, episodeTypeClass);
+
+  let typeElement = document.querySelector('#video-top span.episode-type');
+
+  if (!typeElement) {
+    typeElement = document.createElement('span');
+    typeElement.className = 'episode-type';
+    title.insertAdjacentElement('afterend', typeElement);
+  }
+  typeElement.textContent = `[${episodeTypeClass}]`;
 }
 
 async function updateEpisodesClass() {
-  await utils.waitForElementPresent('.episode-item');
+  await utils.waitForElementPresent('.episode-item', 'multi');
   const episodeBtns = document.querySelectorAll(
     '.episode-item',
   ) as NodeListOf<HTMLDivElement>;

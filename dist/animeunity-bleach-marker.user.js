@@ -17,7 +17,7 @@
 
   const d=new Set;const importCSS = async e=>{d.has(e)||(d.add(e),(t=>{typeof GM_addStyle=="function"?GM_addStyle(t):(document.head||document.documentElement).appendChild(document.createElement("style")).append(t);})(e));};
 
-  const styleCss = ".box-16x9{overflow:visible!important}#video-bottom a{background:none!important}.mixed{background:#404a00!important;background:lch(30 97 102)!important;--darkreader-inline-bgcolor: lch(30 97 102)}.seen.mixed{background:#c2cf00!important;background:lch(80 97 102)!important;--darkreader-inline-bgcolor: lch(80 97 102)}.seen.active.mixed{background:#889800!important;background:lch(60 97 102)!important;--darkreader-inline-bgcolor: lch(60 97 102)}.filler{background:#463100!important;background:lch(20 97 45)!important;--darkreader-inline-bgcolor: lch(20 97 45)}.seen.filler{background:#ff8c6b!important;background:lch(70 97 45)!important;--darkreader-inline-bgcolor: lch(70 97 45)}.seen.active.filler{background:#df2e00!important;background:lch(50 97 45)!important;--darkreader-inline-bgcolor: lch(50 97 45)}";
+  const styleCss = '.box-16x9{overflow:visible!important}#video-bottom a{background:none!important}#video-top{display:flex;justify-content:space-between;align-items:center}#video-top .episode-type{text-transform:uppercase}#video-top .episode-type:before,#video-top .episode-type:after{position:relative;top:.125em;content:" ***** "}.mixed{background:#404a00!important;background:lch(30 97 102)!important;--darkreader-inline-bgcolor: lch(30 97 102)}.seen.mixed{background:#c2cf00!important;background:lch(80 97 102)!important;--darkreader-inline-bgcolor: lch(80 97 102)}.seen.active.mixed{background:#889800!important;background:lch(60 97 102)!important;--darkreader-inline-bgcolor: lch(60 97 102)}.filler{background:#463100!important;background:lch(20 97 45)!important;--darkreader-inline-bgcolor: lch(20 97 45)}.seen.filler{background:#ff8c6b!important;background:lch(70 97 45)!important;--darkreader-inline-bgcolor: lch(70 97 45)}.seen.active.filler{background:#df2e00!important;background:lch(50 97 45)!important;--darkreader-inline-bgcolor: lch(50 97 45)}';
   importCSS(styleCss);
   const canonEpisodes = [
     1,
@@ -425,13 +425,16 @@
         given_timeout: timeoutMs
       };
     }
-    async waitForElementPresent(cssSelector, timeoutMs = 3e4) {
+    async waitForElementPresent(cssSelector, type = "single", timeoutMs = 3e4) {
       if (!cssSelector.trim()) throw new Error("Please specify a css selector");
       try {
-        const result = await this.waitUntil(
-          () => !!document.querySelector(cssSelector)?.parentElement?.lastChild,
-          timeoutMs
-        );
+        const result = await this.waitUntil(() => {
+          if (type === "multi") {
+            return !!document.querySelector(cssSelector)?.parentElement?.lastChild;
+          } else {
+            return !!document.querySelector(cssSelector);
+          }
+        }, timeoutMs);
         return {
           msg: `Element with selector ${cssSelector} is present`,
           time: result.time
@@ -481,9 +484,16 @@
     const activeEpisodeIdx = bleachEpisodeData.get(activeEpisodeNumber);
     const episodeTypeClass = types[activeEpisodeIdx];
     utils.addClass(videoTopBarElement, episodeTypeClass);
+    let typeElement = document.querySelector("#video-top span.episode-type");
+    if (!typeElement) {
+      typeElement = document.createElement("span");
+      typeElement.className = "episode-type";
+      title.insertAdjacentElement("afterend", typeElement);
+    }
+    typeElement.textContent = `[${episodeTypeClass}]`;
   }
   async function updateEpisodesClass() {
-    await utils.waitForElementPresent(".episode-item");
+    await utils.waitForElementPresent(".episode-item", "multi");
     const episodeBtns = document.querySelectorAll(
       ".episode-item"
     );
