@@ -8,10 +8,6 @@ import { utils } from './UserScriptUntil';
 async function updateVideoTopBarTypeClass() {
   await utils.waitForElementPresent('#video-top');
   const videoTopBarEl = document.getElementById('video-top');
-  console.log(
-    '🚀 ~ :9 ~ updateVideoTopBarTypeClass ~ videoTopBarEl:',
-    videoTopBarEl,
-  );
   const title = videoTopBarEl?.querySelector('.title');
   const activeEpisodeNumber = +(title?.textContent?.match(/\d+/)?.[0] ?? -1);
   const activeEpisodeIdx = bleachEpisodeData.get(activeEpisodeNumber);
