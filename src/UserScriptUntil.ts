@@ -34,7 +34,11 @@ class UserScriptUtils {
     };
   }
 
-  async waitForElementPresent(cssSelector: string, timeoutMs = 30_000) {
+  async waitForElementPresent(
+    cssSelector: string,
+    type = 'single',
+    timeoutMs = 30_000,
+  ) {
     if (!cssSelector.trim()) throw new Error('Please specify a css selector');
 
     /* 
@@ -44,10 +48,14 @@ class UserScriptUtils {
 			Ritorno il valore di un'altra Promise per poter customizzare meglio le risposte
 		*/
     try {
-      const result = await this.waitUntil(
-        () => !!document.querySelector(cssSelector)?.parentElement?.lastChild,
-        timeoutMs,
-      );
+      const result = await this.waitUntil(() => {
+        if (type === 'multi') {
+          return !!document.querySelector(cssSelector)?.parentElement
+            ?.lastChild;
+        } else {
+          return !!document.querySelector(cssSelector);
+        }
+      }, timeoutMs);
       return {
         msg: `Element with selector ${cssSelector} is present`,
         time: result.time,
