@@ -12,7 +12,7 @@
 // @grant        GM_addStyle
 // ==/UserScript==
 
-(async function () {
+(function () {
   'use strict';
 
   const d=new Set;const importCSS = async e=>{d.has(e)||(d.add(e),(t=>{typeof GM_addStyle=="function"?GM_addStyle(t):(document.head||document.documentElement).appendChild(document.createElement("style")).append(t);})(e));};
@@ -472,6 +472,10 @@
   async function updateVideoTopBarTypeClass() {
     await utils.waitForElementPresent("#video-top");
     const videoTopBarEl = document.getElementById("video-top");
+    console.log(
+      "🚀 ~ :9 ~ updateVideoTopBarTypeClass ~ videoTopBarEl:",
+      videoTopBarEl
+    );
     const title = videoTopBarEl?.querySelector(".title");
     const activeEpisodeNumber = +(title?.textContent?.match(/\d+/)?.[0] ?? -1);
     const activeEpisodeIdx = bleachEpisodeData.get(activeEpisodeNumber);
@@ -491,21 +495,22 @@
       utils.addClass(btn, classToAdd);
     });
   }
-  updateVideoTopBarTypeClass();
-  updateEpisodesTypeClass();
-  const observer = new MutationObserver(() => {
+  function updateChanges() {
     updateVideoTopBarTypeClass();
     updateEpisodesTypeClass();
-  });
-  await( utils.waitForElementPresent("#video-top"));
-  observer.observe(document.querySelector("#video-top"), {
-    characterData: true,
-    subtree: true
-  });
-  await( utils.waitForElementPresent("#episode-nav"));
-  observer.observe(document.querySelector("#episode-nav"), {
-    attributes: true,
-    subtree: true
+  }
+  updateChanges();
+  const observer = new MutationObserver(updateChanges);
+  const elementsToObserve = [
+    "#video-top .title",
+    ".episode-wrapper .episode-item a"
+  ];
+  elementsToObserve.forEach(async (selector) => {
+    await utils.waitForElementPresent(selector);
+    observer.observe(document.querySelector(selector), {
+      characterData: true,
+      subtree: true
+    });
   });
 
 })();

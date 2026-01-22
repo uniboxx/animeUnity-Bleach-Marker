@@ -3,9 +3,15 @@ import { types, bleachEpisodeData } from './episodesData';
 import { utils } from './UserScriptUntil';
 
 // ================== MAIN CODE ==================
+
+// callbacks for observers, executed when observer is triggered
 async function updateVideoTopBarTypeClass() {
   await utils.waitForElementPresent('#video-top');
   const videoTopBarEl = document.getElementById('video-top');
+  console.log(
+    '🚀 ~ :9 ~ updateVideoTopBarTypeClass ~ videoTopBarEl:',
+    videoTopBarEl,
+  );
   const title = videoTopBarEl?.querySelector('.title');
   const activeEpisodeNumber = +(title?.textContent?.match(/\d+/)?.[0] ?? -1);
   const activeEpisodeIdx = bleachEpisodeData.get(activeEpisodeNumber);
@@ -26,22 +32,29 @@ async function updateEpisodesTypeClass() {
     utils.addClass(btn, classToAdd);
   });
 }
-updateVideoTopBarTypeClass();
-updateEpisodesTypeClass();
 
-const observer = new MutationObserver(() => {
+// wrapper for all changes to apply
+function updateChanges() {
   updateVideoTopBarTypeClass();
   updateEpisodesTypeClass();
-});
+}
+// initial execution at page load
+updateChanges();
 
-await utils.waitForElementPresent('#video-top');
-observer.observe(document.querySelector('#video-top') as Node, {
-  characterData: true,
-  subtree: true,
-});
+// define observer
+const observer = new MutationObserver(updateChanges);
 
-await utils.waitForElementPresent('#episode-nav');
-observer.observe(document.querySelector('#episode-nav') as Node, {
-  attributes: true,
-  subtree: true,
+// define elements to observe
+const elementsToObserve = [
+  '#video-top .title',
+  '.episode-wrapper .episode-item a',
+];
+
+// start observing
+elementsToObserve.forEach(async (selector) => {
+  await utils.waitForElementPresent(selector);
+  observer.observe(document.querySelector(selector) as Node, {
+    characterData: true,
+    subtree: true,
+  });
 });
