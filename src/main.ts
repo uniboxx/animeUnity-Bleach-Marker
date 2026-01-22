@@ -2,20 +2,22 @@ import './style.css';
 import { types, bleachEpisodeData } from './episodesData';
 import { utils } from './UserScriptUntil';
 
-// ================== MAIN CODE ==================
-
-// callbacks for observers, executed when observer is triggered
-async function updateVideoTopBarTypeClass() {
+// functions to execute when observer is triggered
+async function updateVideoTopBarClass() {
   await utils.waitForElementPresent('#video-top');
-  const videoTopBarEl = document.getElementById('video-top');
-  const title = videoTopBarEl?.querySelector('.title');
-  const activeEpisodeNumber = +(title?.textContent?.match(/\d+/)?.[0] ?? -1);
+  const videoTopBarElement = document.getElementById(
+    'video-top',
+  ) as HTMLDivElement;
+  const title = videoTopBarElement.querySelector(
+    'span.title',
+  ) as HTMLSpanElement;
+  const activeEpisodeNumber = +(title.textContent.match(/\d+/)?.[0] ?? -1);
   const activeEpisodeIdx = bleachEpisodeData.get(activeEpisodeNumber);
-  const classToAdd = types[activeEpisodeIdx];
-  videoTopBarEl && utils.addClass(videoTopBarEl, classToAdd);
+  const episodeTypeClass = types[activeEpisodeIdx]; // "canon", "mixed" or "filler"
+  utils.addClass(videoTopBarElement, episodeTypeClass);
 }
 
-async function updateEpisodesTypeClass() {
+async function updateEpisodesClass() {
   await utils.waitForElementPresent('.episode-item');
   const episodeBtns = document.querySelectorAll(
     '.episode-item',
@@ -24,15 +26,15 @@ async function updateEpisodesTypeClass() {
     const episodeNumber = +btn.textContent;
     if (!episodeNumber) return;
     const typeIdx = bleachEpisodeData.get(episodeNumber);
-    const classToAdd = types[typeIdx];
-    utils.addClass(btn, classToAdd);
+    const typeClass = types[typeIdx];
+    utils.addClass(btn, typeClass);
   });
 }
 
 // wrapper for all changes to apply
 function updateChanges() {
-  updateVideoTopBarTypeClass();
-  updateEpisodesTypeClass();
+  updateVideoTopBarClass();
+  updateEpisodesClass();
 }
 // initial execution at page load
 updateChanges();

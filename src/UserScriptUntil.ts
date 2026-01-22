@@ -45,7 +45,7 @@ class UserScriptUtils {
 		*/
     try {
       const result = await this.waitUntil(
-        () => !!document.querySelector(cssSelector),
+        () => !!document.querySelector(cssSelector)?.parentElement?.lastChild,
         timeoutMs,
       );
       return {

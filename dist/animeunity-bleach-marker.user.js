@@ -429,7 +429,7 @@
       if (!cssSelector.trim()) throw new Error("Please specify a css selector");
       try {
         const result = await this.waitUntil(
-          () => !!document.querySelector(cssSelector),
+          () => !!document.querySelector(cssSelector)?.parentElement?.lastChild,
           timeoutMs
         );
         return {
@@ -469,16 +469,20 @@
     }
   }
   const utils = new UserScriptUtils();
-  async function updateVideoTopBarTypeClass() {
+  async function updateVideoTopBarClass() {
     await utils.waitForElementPresent("#video-top");
-    const videoTopBarEl = document.getElementById("video-top");
-    const title = videoTopBarEl?.querySelector(".title");
-    const activeEpisodeNumber = +(title?.textContent?.match(/\d+/)?.[0] ?? -1);
+    const videoTopBarElement = document.getElementById(
+      "video-top"
+    );
+    const title = videoTopBarElement.querySelector(
+      "span.title"
+    );
+    const activeEpisodeNumber = +(title.textContent.match(/\d+/)?.[0] ?? -1);
     const activeEpisodeIdx = bleachEpisodeData.get(activeEpisodeNumber);
-    const classToAdd = types[activeEpisodeIdx];
-    videoTopBarEl && utils.addClass(videoTopBarEl, classToAdd);
+    const episodeTypeClass = types[activeEpisodeIdx];
+    utils.addClass(videoTopBarElement, episodeTypeClass);
   }
-  async function updateEpisodesTypeClass() {
+  async function updateEpisodesClass() {
     await utils.waitForElementPresent(".episode-item");
     const episodeBtns = document.querySelectorAll(
       ".episode-item"
@@ -487,13 +491,13 @@
       const episodeNumber = +btn.textContent;
       if (!episodeNumber) return;
       const typeIdx = bleachEpisodeData.get(episodeNumber);
-      const classToAdd = types[typeIdx];
-      utils.addClass(btn, classToAdd);
+      const typeClass = types[typeIdx];
+      utils.addClass(btn, typeClass);
     });
   }
   function updateChanges() {
-    updateVideoTopBarTypeClass();
-    updateEpisodesTypeClass();
+    updateVideoTopBarClass();
+    updateEpisodesClass();
   }
   updateChanges();
   const observer = new MutationObserver(updateChanges);
