@@ -28,14 +28,19 @@ Userscript to mark bleach's episodes as canon, mixed or filler on animeunity.so 
 
 ### What to do
 
-1. clone the repository:
+1. open your terminal and clone the repository:
 
 ```
 git clone https://github.com/uniboxx/animeUnity-Bleach-Marker
 ```
 
-2. open the created folder in vscode
-3. from inside the folder terminal (we suggest to use the integrated terminal in vscode) install project dependencies (in case of bun):
+1. open the new created folder in vscode:
+
+   ```
+   code animeUnity-Bleach-Marker
+   ```
+
+2. in a terminal inside the folder (we suggest to use the integrated terminal in vscode) install project dependencies (in case of bun):
 
 ```
 bun i
