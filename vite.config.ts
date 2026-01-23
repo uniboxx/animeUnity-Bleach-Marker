@@ -16,7 +16,7 @@ export default defineConfig({
         license: 'MIT',
         homepage: 'https://github.com/uniboxx/animeUnity-Bleach-Marker',
         match: [
-          'https://www.animeunity.so/anime/69-bleach/',
+          'https://www.animeunity.so/anime/69-bleach',
           'https://www.animeunity.so/anime/3075-bleach-ita',
         ],
         downloadURL:
