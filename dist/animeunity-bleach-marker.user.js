@@ -8,7 +8,8 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=animeunity.so
 // @homepage     https://github.com/uniboxx/animeUnity-Bleach-Marker
 // @downloadURL  https://github.com/uniboxx/animeUnity-Bleach-Marker/raw/main/dist/animeunity-bleach-marker.user.js
-// @match        https://www.animeunity.so/anime/*
+// @match        https://www.animeunity.so/anime/69-bleach/
+// @match        https://www.animeunity.so/anime/3075-bleach-ita
 // @grant        GM_addStyle
 // ==/UserScript==
 

@@ -6,17 +6,9 @@
 }
 
 #video-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   .episode-type {
-    text-transform: uppercase;
-    &::before,
-    &::after {
-      position: relative;
-      top: 0.125em;
-      content: ' ***** ';
-    }
+    margin-left: 0.5em;
+    font-size: 0.8em;
   }
 }
 

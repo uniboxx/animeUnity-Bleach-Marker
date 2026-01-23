@@ -23,7 +23,7 @@ async function updateVideoTopBarClass() {
     typeElement.className = 'episode-type';
     title.insertAdjacentElement('afterend', typeElement);
   }
-  typeElement.textContent = `[${episodeTypeClass}]`;
+  typeElement.textContent = `(${episodeTypeClass})`;
 }
 
 async function updateEpisodesClass() {
